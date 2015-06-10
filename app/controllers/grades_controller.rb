@@ -4,7 +4,9 @@ class GradesController < ApplicationController
   # GET /grades
   # GET /grades.json
   def index
-    @grades = Grade.all
+    @grades = Grade.where(teacher_id: session[:teacher_id])
+    @grades = Grade.where(student_id: session[:student_id])
+    @grades = Grade.where(parent_id: session[:parent_id])
   end
 
   # GET /grades/1

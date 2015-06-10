@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all
+    @students = Student.where(teacher_id: session[:teacher_id])
   end
 
   # GET /students/1
@@ -14,7 +14,7 @@ class StudentsController < ApplicationController
 
   # GET /students/new
   def new
-    @student = Student.new
+    @student = Student.new(teacher_id: session[:teacher_id])
   end
 
   # GET /students/1/edit
@@ -24,7 +24,7 @@ class StudentsController < ApplicationController
   # POST /students
   # POST /students.json
   def create
-    @student = Student.new(student_params)
+    @student = Student.new(student_params, teacher_id: session[:teacher_id])
 
     respond_to do |format|
       if @student.save
