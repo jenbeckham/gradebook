@@ -1,11 +1,12 @@
 class StudentsController < ApplicationController
-  # before_action :
+  before_action :teacher_logged_in?
+  before_action :student_logged_in?, only: [:edit, :update]
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
   # GET /students
   # GET /students.json
   def index
-    @students = Student.where(teacher_id: session[:teacher_id])
+    @students = Student.where(teacher_id: session[:user_id])
   end
 
   # GET /students/1
@@ -15,7 +16,7 @@ class StudentsController < ApplicationController
 
   # GET /students/new
   def new
-    @student = Student.new(teacher_id: session[:teacher_id])
+    @student = Student.new(teacher_id: session[:user_id])
   end
 
   # GET /students/1/edit
@@ -25,7 +26,7 @@ class StudentsController < ApplicationController
   # POST /students
   # POST /students.json
   def create
-    @student = Student.new(student_params, teacher_id: session[:teacher_id])
+    @student = Student.new(student_params, teacher_id: session[:user_id])
 
     respond_to do |format|
       if @student.save
@@ -72,4 +73,20 @@ class StudentsController < ApplicationController
     def student_params
       params.require(:student).permit(:name, :email, :password_digest, :teacher_id)
     end
+
+    def teacher_logged_in?
+      if Teacher.find_by_id(session[:user_id]) && (session[:user_type] == "teacher")
+      else
+        redirect_to sessions_login_path, notice: 'Please login.'
+      end
+    end
+
+    def student_logged_in?
+      if Student.find_by_id(session[:user_id]) && (session[:user_type] == "student")
+      else
+        redirect_to sessions_login_path, notice: 'Please login.'
+      end
+    end
+
+
 end
