@@ -4,6 +4,13 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#login'
   get 'sessions/logout'
   get 'logout' => 'sessions#login'
+  get 'grades/student'
+  get 'grades/parent'
+  get 'grades/teacher'
+  # get 'home' => 'grades#student'
+  # get 'home' => 'grades#parent'
+  # get 'home' => 'students#index'
+  # root 'login'
 
   resources :parents
   resources :students

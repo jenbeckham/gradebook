@@ -1,20 +1,28 @@
 class GradesController < ApplicationController
-  before_action :teacher_logged_in?
-  before_action :student_logged_in?, only: [:index]
-  before_action :parent_logged_in?, only: [:index]
+  before_action :student_logged_in?, only: [:student]
+  # before_action :teacher_logged_in? [:teacher, :new, :create, :edit, :update, :destroy]
+  before_action :parent_logged_in?, only: [:parent]
   before_action :set_grade, only: [:show, :edit, :update, :destroy]
 
   # GET /grades
   # GET /grades.json
-  def index
-    if session[:user_type] == "parent"
-      @parent = Parent.find_by_id(session[:user_id])
-      @grades = Grade.where(student_id: session[@parent.student_id])
-    else session[:user_type] == "student"
-      @student = Student.find_by_id(session[:user_id])
-      @grades = Grade.where(student_id: session[:user_id])
-      # @grades = Grade.student_id.where(student_id: session[:student_id])
-    end
+
+  def student
+    @student = Student.find_by_id(session[:user_id])
+    @grades = Grade.where(student_id: session[:user_id])
+  end
+
+  def parent
+    @parent = Parent.find_by_id(session[:user_id])
+    @student = Student.find_by_id(@parent.student_id)
+    @grades = Grade.where(student_id: @parent.student_id)
+  end
+
+
+  def teacher
+    @students = Student.where(teacher_id: session[:user_id])
+    @grades = Grade.where(student_id: params[:student_id])
+    # @grades = Grade.student_id.where(student_id: session[:student_id])
   end
 
   # GET /grades/1
