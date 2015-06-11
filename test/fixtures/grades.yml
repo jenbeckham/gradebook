@@ -1,11 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  assignment_name: MyString
-  score: 1
-  student_in: 1
+  assignment_name: "Homework"
+  score: 2
+  student_id: 1
 
 two:
-  assignment_name: MyString
+  assignment_name: "Classwork"
+  score: 3
+  student_id: 1
+
+three:
+  assignment_name: "Homework"
   score: 1
-  student_in: 1
+  student_id: 2
+
+four:
+  assignment_name: "Classwork"
+  score: 3
+  student_id: 2
+
+five:
+  assignment_name: "Homework"
+  score: 4
+  student_id: 3
+
+six:
+  assignment_name: "Classwork"
+  score: 3
+  student_id: 3

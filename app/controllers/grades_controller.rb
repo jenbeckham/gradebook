@@ -1,12 +1,20 @@
 class GradesController < ApplicationController
+  before_action :teacher_logged_in?
+  before_action :student_logged_in?, only: [:index]
+  before_action :parent_logged_in?, only: [:index]
   before_action :set_grade, only: [:show, :edit, :update, :destroy]
 
   # GET /grades
   # GET /grades.json
   def index
-    @grades = Grade.where(teacher_id: session[:teacher_id])
-    @grades = Grade.where(student_id: session[:student_id])
-    @grades = Grade.where(parent_id: session[:parent_id])
+    if session[:user_type] == "parent"
+      @parent = Parent.find_by_id(session[:user_id])
+      @grades = Grade.where(student_id: session[@parent.student_id])
+    else session[:user_type] == "student"
+      @student = Student.find_by_id(session[:user_id])
+      @grades = Grade.where(student_id: session[:user_id])
+      # @grades = Grade.student_id.where(student_id: session[:student_id])
+    end
   end
 
   # GET /grades/1
@@ -73,4 +81,26 @@ class GradesController < ApplicationController
     def grade_params
       params.require(:grade).permit(:assignment_name, :score, :student_in)
     end
+
+    def teacher_logged_in?
+      if Teacher.find_by_id(session[:user_id]) && (session[:user_type] == "teacher")
+      else
+        redirect_to sessions_login_path, notice: 'Please login.'
+      end
+    end
+
+    def student_logged_in?
+      if Student.find_by_id(session[:user_id]) && (session[:user_type] == "student")
+      else
+        redirect_to sessions_login_path, notice: 'Please login.'
+      end
+    end
+
+    def parent_logged_in?
+      if Parent.find_by_id(session[:user_id]) && (session[:user_type] == "parent")
+      else
+        redirect_to sessions_login_path, notice: 'Please login.'
+      end
+    end
+  end
 end

@@ -1,13 +1,37 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  email: MyString
-  password_digest: MyString
-  teacher_id: 1
+  name: "Sally Sue"
+  email: ss@gmail.com
+  password_digest: "sally1"
+  teacher: :one
 
 two:
-  name: MyString
-  email: MyString
-  password_digest: MyString
-  teacher_id: 1
+  name: "Bobby Boo"
+  email: bb@gmail.com
+  password_digest: "bobby1"
+  teacher: :one
+
+three:
+  name: "Alex Anderson"
+  email: aa@gmail.com
+  password_digest: "alex1"
+  teacher: :two
+
+four:
+  name: "Cassie Corn"
+  email: cc@yahoo.com
+  password_digest: "bobby1"
+  teacher: :two
+
+five:
+  name: "Sally Sue"
+  email: ss@gmail.com
+  password_digest: "sally1"
+  teacher: :one
+
+six:
+  name: "Bobby Boo"
+  email: bb@yahoo.com
+  password_digest: "bobby1"
+  teacher: :one
