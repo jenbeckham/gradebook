@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'sessions/login'
+  post 'sessions/login'
   get 'login' => 'sessions#login'
   get 'sessions/logout'
   get 'logout' => 'sessions#login'

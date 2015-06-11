@@ -79,7 +79,7 @@ class GradesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def grade_params
-      params.require(:grade).permit(:assignment_name, :score, :student_in)
+      params.require(:grade).permit(:assignment_name, :score, :student_id)
     end
 
     def teacher_logged_in?
@@ -102,5 +102,4 @@ class GradesController < ApplicationController
         redirect_to sessions_login_path, notice: 'Please login.'
       end
     end
-  end
 end
